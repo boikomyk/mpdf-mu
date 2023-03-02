@@ -4,12 +4,13 @@ namespace Mpdf\Http;
 
 use Mpdf\Log\Context as LogContext;
 use Psr\Http\Message\RequestInterface;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class SocketHttpClient implements \Mpdf\Http\ClientInterface, \Psr\Log\LoggerAwareInterface
+class SocketHttpClient implements \Mpdf\Http\ClientInterface, LoggerAwareInterface
 {
 
-	private $logger;
+	private LoggerInterface $logger;
 
 	public function __construct(LoggerInterface $logger)
 	{
@@ -104,7 +105,7 @@ class SocketHttpClient implements \Mpdf\Http\ClientInterface, \Psr\Log\LoggerAwa
 			->withBody($stream);
 	}
 
-	public function setLogger(LoggerInterface $logger)
+	public function setLogger(LoggerInterface $logger): void
 	{
 		$this->logger = $logger;
 	}

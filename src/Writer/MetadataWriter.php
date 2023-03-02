@@ -8,9 +8,10 @@ use Mpdf\Mpdf;
 use Mpdf\Pdf\Protection;
 use Mpdf\Utils\PdfDate;
 
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class MetadataWriter implements \Psr\Log\LoggerAwareInterface
+class MetadataWriter implements LoggerAwareInterface
 {
 
 	use Strict;
@@ -35,10 +36,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 	 */
 	private $protection;
 
-	/**
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	private $logger;
+	private LoggerInterface $logger;
 
 	public function __construct(Mpdf $mpdf, BaseWriter $writer, Form $form, Protection $protection, LoggerInterface $logger)
 	{
@@ -808,7 +806,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 		}
 	}
 
-	public function setLogger(LoggerInterface $logger)
+	public function setLogger(LoggerInterface $logger): void
 	{
 		$this->logger = $logger;
 	}

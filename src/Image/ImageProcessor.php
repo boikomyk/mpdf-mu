@@ -14,9 +14,10 @@ use Mpdf\Log\Context as LogContext;
 use Mpdf\Mpdf;
 use Mpdf\Otl;
 use Mpdf\SizeConverter;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class ImageProcessor implements \Psr\Log\LoggerAwareInterface
+class ImageProcessor implements LoggerAwareInterface
 {
 
 	/**
@@ -89,10 +90,7 @@ class ImageProcessor implements \Psr\Log\LoggerAwareInterface
 	 */
 	private $assetFetcher;
 
-	/**
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	public $logger;
+	public LoggerInterface $logger;
 
 	public function __construct(
 		Mpdf $mpdf,
@@ -126,16 +124,9 @@ class ImageProcessor implements \Psr\Log\LoggerAwareInterface
 		$this->failedImages = [];
 	}
 
-	/**
-	 * @param \Psr\Log\LoggerInterface
-	 *
-	 * @return self
-	 */
-	public function setLogger(LoggerInterface $logger)
+	public function setLogger(LoggerInterface $logger): void
 	{
 		$this->logger = $logger;
-
-		return $this;
 	}
 
 	public function getImage(&$file, $firstTime = true, $allowvector = true, $orig_srcpath = false, $interpolation = false)

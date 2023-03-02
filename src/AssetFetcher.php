@@ -7,9 +7,10 @@ use Mpdf\File\StreamWrapperChecker;
 use Mpdf\Http\ClientInterface;
 use Mpdf\Http\Request;
 use Mpdf\Log\Context as LogContext;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class AssetFetcher implements \Psr\Log\LoggerAwareInterface
+class AssetFetcher implements LoggerAwareInterface
 {
 
 	private $mpdf;
@@ -18,7 +19,7 @@ class AssetFetcher implements \Psr\Log\LoggerAwareInterface
 
 	private $http;
 
-	private $logger;
+	private LoggerInterface $logger;
 
 	public function __construct(Mpdf $mpdf, LocalContentLoaderInterface $contentLoader, ClientInterface $http, LoggerInterface $logger)
 	{
@@ -116,7 +117,7 @@ class AssetFetcher implements \Psr\Log\LoggerAwareInterface
 		return strpos($path, '://') === false; // @todo More robust implementation
 	}
 
-	public function setLogger(LoggerInterface $logger)
+	public function setLogger(LoggerInterface $logger): void
 	{
 		$this->logger = $logger;
 	}
